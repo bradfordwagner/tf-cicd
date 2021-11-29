@@ -58,3 +58,9 @@ resource "null_resource" "await_workflows" {
     command = "kubectl rollout status -n argo deployment argo-server"
   }
 }
+
+# setup
+# 1 - secrets - ie kaniko etc
+# 2 - workflows
+# 3 - events
+# 4 - test build
