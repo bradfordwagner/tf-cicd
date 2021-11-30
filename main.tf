@@ -51,7 +51,7 @@ resource "null_resource" "events_bus" {
   }
 }
 
-
+# await creation of argo workflows
 resource "null_resource" "await_workflows" {
   depends_on = [null_resource.workflows]
   provisioner "local-exec" {
