@@ -59,8 +59,50 @@ resource "null_resource" "await_workflows" {
   }
 }
 
+resource "kubernetes_secret" "github" {
+  depends_on = [null_resource.await_workflows]
+  metadata {
+    name = "github-access-token"
+    namespace = var.namespaces.events
+  }
+  data = {
+    token = var.github_access_token
+  }
+}
+
+resource "kubernetes_secret" "quay" {
+  depends_on = [null_resource.await_workflows]
+  metadata {
+    name = "bradfordwagner-kaniko-test-pull-secret"
+    namespace = var.namespaces.events
+  }
+  data = {
+    ".dockerconfigjson" = base64decode(var.quay_token)
+  }
+}
+
 # setup
 # 1 - secrets - ie kaniko etc
 # 2 - workflows
 # 3 - events
 # 4 - test build
+
+resource "helm_release" "workflows" {
+  depends_on       = [kubernetes_secret.quay]
+  chart            = "/Users/bwagner/workspace/github/bradfordwagner/github.bradfordwagner.chart.argocd.workflows"
+  name             = "workflows"
+  namespace        = var.namespaces.workflows
+  create_namespace = true
+  cleanup_on_fail  = true
+  force_update     = true
+}
+
+resource "helm_release" "events" {
+  depends_on       = [kubernetes_secret.github]
+  chart            = "/Users/bwagner/workspace/github/bradfordwagner/github.bradfordwagner.argo.events.webhook"
+  name             = "workflows"
+  namespace        = var.namespaces.events
+  create_namespace = true
+  cleanup_on_fail  = true
+  force_update     = true
+}

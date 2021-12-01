@@ -9,3 +9,11 @@ variable "namespaces" {
     workflows = "argo",
   }
 }
+
+variable "github_access_token" {
+  type = string
+}
+
+variable "quay_token" {
+  type = string
+}
