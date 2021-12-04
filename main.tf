@@ -74,7 +74,7 @@ resource "kubernetes_secret" "quay" {
   depends_on = [null_resource.await_workflows]
   metadata {
     name = "bradfordwagner-kaniko-test-pull-secret"
-    namespace = var.namespaces.events
+    namespace = var.namespaces.workflows
   }
   data = {
     ".dockerconfigjson" = base64decode(var.quay_token)
