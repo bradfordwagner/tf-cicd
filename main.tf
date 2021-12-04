@@ -97,10 +97,10 @@ resource "helm_release" "workflows" {
   force_update     = true
 }
 
-resource "helm_release" "events" {
+resource "helm_release" "events_webhook" {
   depends_on       = [kubernetes_secret.github]
   chart            = "/Users/bwagner/workspace/github/bradfordwagner/github.bradfordwagner.argo.events.webhook"
-  name             = "workflows"
+  name             = "events-webhook"
   namespace        = var.namespaces.events
   create_namespace = true
   cleanup_on_fail  = true
