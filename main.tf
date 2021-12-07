@@ -89,7 +89,7 @@ resource "kubernetes_secret" "quay" {
 
 resource "helm_release" "workflows" {
   depends_on       = [kubernetes_secret.quay]
-  chart            = "/Users/bwagner/workspace/github/bradfordwagner/github.bradfordwagner.chart.argocd.workflows"
+  chart            = "/Users/bwagner/workspace/github/bradfordwagner/charts/bradfordwagner.chart.argocd.workflows"
   name             = "workflows"
   namespace        = var.namespaces.workflows
   create_namespace = true
@@ -99,7 +99,7 @@ resource "helm_release" "workflows" {
 
 resource "helm_release" "events_webhook" {
   depends_on       = [kubernetes_secret.github]
-  chart            = "/Users/bwagner/workspace/github/bradfordwagner/github.bradfordwagner.argo.events.webhook"
+  chart            = "/Users/bwagner/workspace/github/bradfordwagner/charts/bradfordwagner.chart.argo.events.webhook"
   name             = "events-webhook"
   namespace        = var.namespaces.events
   create_namespace = true
