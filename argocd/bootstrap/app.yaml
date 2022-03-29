@@ -8,8 +8,7 @@ metadata:
 spec:
   source:
     repoURL: https://github.com/bradfordwagner/tf-cicd.git
-    targetRevision: feature/argocd
-#   targetRevision: HEAD
+    targetRevision: HEAD
     path: argocd/apps
     directory:
       recurse: true

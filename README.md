@@ -21,6 +21,3 @@ clear; tf apply   -auto-approve
 k get svc --kubeconfig ~/.kube/personal -n argo-events github-webhook -o json | jq -r '.status.loadBalancer.ingress[0].ip' | pbcopy
 
 ```
-
-## TODO:
-- app health in sync waves: https://argo-cd.readthedocs.io/en/stable/operator-manual/health/#argocd-app
