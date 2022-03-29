@@ -1,0 +1,21 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: argo-events-bus
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  source:
+    repoURL: https://github.com/bradfordwagner/deploy-argoevents-bus.git
+    targetRevision: HEAD
+    path: .
+  destination:
+    name: infra-admin
+  project: default
+  syncPolicy:
+    automated:
+      prune: true
+

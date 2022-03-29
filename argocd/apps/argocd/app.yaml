@@ -1,0 +1,16 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: argocd
+  namespace: argocd
+spec:
+  source:
+    repoURL: https://github.com/bradfordwagner/deploy-argocd.git
+    targetRevision: HEAD
+    path: .
+  destination:
+    name: in-cluster
+  project: default
+  syncPolicy:
+    automated: {}
+
