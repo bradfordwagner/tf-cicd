@@ -1,7 +1,7 @@
 # use a local cluster like minikube to bootstrap a target cluster
 # the end state might be local cluster only
 ns=argocd
-kubectl apply -n ${ns} -k https://github.com/bradfordwagner/deploy-argocd.git
+kubectl apply -n ${ns} -k https://github.com/bradfordwagner/deploy-argocd.git/
 
 echo awaiting argocd server + redis to startup
 kubectl wait -n ${ns} deploy/argocd-server --for condition=available --timeout=5m
