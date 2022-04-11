@@ -8,7 +8,8 @@ metadata:
 spec:
   source:
     repoURL: https://github.com/bradfordwagner/tf-cicd.git
-    targetRevision: HEAD
+    targetRevision: feature/appset
+#   targetRevision: HEAD
     path: argocd/apps
     directory:
       recurse: true
@@ -18,4 +19,26 @@ spec:
   syncPolicy:
     automated:
       prune: true
-
+---
+# used to initialize cluster contexts - from secret
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: bootstrap-cluster-contexts
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  source:
+    repoURL: https://github.com/bradfordwagner/chart-argocd-init-contexts.git
+    targetRevision: HEAD
+    path: .
+    helm:
+      releaseName: bootstrap-clusters
+  destination:
+    name: in-cluster
+    namespace: argocd
+  project: default
+  syncPolicy:
+    automated:
+      prune: true

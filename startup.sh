@@ -27,8 +27,9 @@ argocd account update-password \
 echo https://${argo_host} | pbcopy
 echo https://${argo_host}
 
-# add the downstream cluster to argocd
-argocd cluster add --kubeconfig ~/.kube/personal infra-admin -y
+# setup secrets for cluster bootstrap
+kubectl create secret generic login    -n ${ns} --from-literal="username=admin" --from-literal="password=admin1234"
+kubectl create secret generic contexts -n ${ns} --from-file ~/.kube/kind/internal/cicd
 
 # bootstrap all of our apps
 kubectl apply -f argocd/bootstrap/app.yaml

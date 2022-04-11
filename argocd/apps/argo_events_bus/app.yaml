@@ -13,7 +13,7 @@ spec:
     targetRevision: HEAD
     path: .
   destination:
-    name: infra-admin
+    name: cicd
   project: default
   syncPolicy:
     automated:

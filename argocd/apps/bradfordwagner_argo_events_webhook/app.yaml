@@ -10,12 +10,13 @@ metadata:
 spec:
   source:
     repoURL: https://github.com/bradfordwagner/argo-events-webhook.git
-    targetRevision: HEAD
+    targetRevision: feature/kind
+#   targetRevision: HEAD
     path: .
     helm:
       releaseName: events-webhook
   destination:
-    name: infra-admin
+    name: cicd
     namespace: argo-events
   project: default
   syncPolicy:

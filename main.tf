@@ -1,6 +1,6 @@
 # setup k8s providers
 provider "kubernetes" {
-  config_path = "~/.kube/personal"
+  config_path = "~/.kube/kind/cicd"
 }
 
 resource "kubernetes_namespace" "ns" {

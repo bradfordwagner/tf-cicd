@@ -15,7 +15,7 @@ spec:
     helm:
       releaseName: workflows
   destination:
-    name: infra-admin
+    name: cicd
     namespace: argo
   project: default
   syncPolicy:
