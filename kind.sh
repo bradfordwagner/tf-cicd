@@ -25,7 +25,7 @@ EOF
 
 function create_cicd_cluster() {
   cluster_name=$1
-  node_port=30000
+  github_webhook=30000
   argo_workflows=30002
   kind create cluster --kubeconfig ~/.kube/kind/${cluster_name} --config /dev/stdin <<EOF
 kind: Cluster
@@ -35,8 +35,8 @@ nodes:
 - role: control-plane
   extraPortMappings:
   # github webhook
-  - containerPort: ${node_port}
-    hostPort: ${node_port}
+  - containerPort: ${github_webhook}
+    hostPort: ${github_webhook}
     protocol: TCP
   # argo workflows
   - containerPort: ${argo_workflows}
