@@ -10,7 +10,8 @@ metadata:
 spec:
   source:
     repoURL: https://github.com/bradfordwagner/argo-events-webhook.git
-    targetRevision: HEAD
+    targetRevision: feature/paramaterize-values
+#   targetRevision: HEAD
     path: .
     helm:
       releaseName: events-webhook
