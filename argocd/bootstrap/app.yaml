@@ -3,6 +3,8 @@ kind: Application
 metadata:
   name: bootstrap
   namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
   finalizers:
     - resources-finalizer.argocd.argoproj.io
 spec:
@@ -25,6 +27,8 @@ kind: Application
 metadata:
   name: bootstrap-cluster-contexts
   namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "0"
   finalizers:
     - resources-finalizer.argocd.argoproj.io
 spec:
