@@ -1,0 +1,45 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: namespaces-admin
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "0"
+spec:
+  source:
+    repoURL: https://github.com/bradfordwagner/chart-namespaces.git
+    targetRevision: HEAD
+    path: .
+    helm:
+      releaseName: namespaces
+      valueFiles:
+        - values/admin.values.yaml
+  destination:
+    name: in-cluster
+  project: default
+  syncPolicy:
+    automated:
+      prune: true
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: namespaces-cicd
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "0"
+spec:
+  source:
+    repoURL: https://github.com/bradfordwagner/chart-namespaces.git
+    targetRevision: HEAD
+    path: .
+    helm:
+      releaseName: namespaces
+      valueFiles:
+        - values/cicd.values.yaml
+  destination:
+    name: cicd
+  project: default
+  syncPolicy:
+    automated:
+      prune: true

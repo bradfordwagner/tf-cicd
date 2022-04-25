@@ -2,6 +2,7 @@
 # the end state might be local cluster only
 export KUBECONFIG=~/.kube/kind/admin
 ns=argocd
+kubectl create ns ${ns} &>/dev/null
 kubectl apply -n ${ns} -k https://github.com/bradfordwagner/deploy-argocd.git/ &>/dev/null
 
 echo awaiting argocd server + redis to startup
@@ -34,7 +35,7 @@ kubectl create secret generic login    -n ${ns} --from-literal="username=admin" 
 kubectl create secret generic contexts -n ${ns} --from-file ~/.kube/kind/internal/cicd
 
 # bootstrap all of our apps
-kubectl apply -f argocd/bootstrap/app.yaml
+kubectl apply -f argocd/bootstrap
 
 unset KUBECONFIG # remove hard coded admin ctx
 pkill kubectl    # stop the port forward
