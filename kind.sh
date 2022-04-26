@@ -6,6 +6,7 @@
 function create_admin_cluster() {
   cluster_name=$1
   argocd=30001
+  argocd=30003
   kind create cluster --kubeconfig ~/.kube/kind/${cluster_name} --config /dev/stdin <<EOF
 kind: Cluster
 apiVersion: kind.x-k8s.io/v1alpha4
@@ -13,7 +14,9 @@ name: ${cluster_name}
 nodes:
 - role: control-plane
   extraPortMappings:
-  # argocd
+  - containerPort: ${vault}
+    hostPort: ${vault}
+    protocol: TCP
   - containerPort: ${argocd}
     hostPort: ${argocd}
     protocol: TCP
