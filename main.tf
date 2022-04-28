@@ -38,6 +38,26 @@ resource "kubernetes_secret" "keyvault" {
   }
 }
 
+# based on: https://www.vaultproject.io/docs/platform/k8s/helm/run#protecting-sensitive-vault-configurations
+resource "kubernetes_secret" "storage" {
+  depends_on = [kubernetes_namespace.admin]
+  provider   = kubernetes.admin
+  metadata {
+    name      = "storage"
+    namespace = "vault"
+  }
+  data = {
+    "config.hcl" = <<EOF
+storage "azure" {
+  accountName = "bradfordwagnervault"
+  accountKey  = "${var.vault_storage_key}"
+  container   = "backend"
+  environment = "AzurePublicCloud"
+}
+EOF
+  }
+}
+
 ## End ADMIN resources
 
 ## CICD resources

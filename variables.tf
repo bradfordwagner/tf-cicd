@@ -5,6 +5,10 @@ variable "namespaces" {
   }
 }
 
+variable "vault_storage_key" {
+  type = string
+}
+
 variable "vault_sp_secret" {
   type = string
 }
