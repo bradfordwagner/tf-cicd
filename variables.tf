@@ -2,8 +2,11 @@ variable "namespaces" {
   default = {
     events    = "argo-events",
     workflows = "argo",
-    vault     = "vault",
   }
+}
+
+variable "vault_sp_secret" {
+  type = string
 }
 
 variable "github_access_token" {

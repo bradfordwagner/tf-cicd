@@ -1,9 +1,48 @@
 # setup k8s providers
 provider "kubernetes" {
   config_path = "~/.kube/kind/cicd"
+  alias       = "cicd"
+}
+provider "kubernetes" {
+  config_path = "~/.kube/kind/admin"
+  alias       = "admin"
 }
 
-resource "kubernetes_namespace" "ns" {
+# read the vault service principal
+data "azuread_service_principal" "vault" {
+  display_name = "bradfordwagner-vault"
+}
+
+## ADMIN resources
+resource "kubernetes_namespace" "admin" {
+  provider = kubernetes.admin
+  for_each = toset(["vault"])
+  metadata {
+    name = each.value
+  }
+}
+
+resource "kubernetes_secret" "keyvault" {
+  depends_on = [kubernetes_namespace.admin]
+  provider   = kubernetes.admin
+  metadata {
+    name      = "keyvault"
+    namespace = "vault"
+  }
+  data = {
+    AZURE_TENANT_ID                = data.azuread_service_principal.vault.application_tenant_id
+    AZURE_CLIENT_ID                = data.azuread_service_principal.vault.application_id
+    AZURE_CLIENT_SECRET            = var.vault_sp_secret
+    VAULT_AZUREKEYVAULT_VAULT_NAME = "bradfordwagner-vault"
+    VAULT_AZUREKEYVAULT_KEY_NAME   = "generated-key"
+  }
+}
+
+## End ADMIN resources
+
+## CICD resources
+resource "kubernetes_namespace" "cicd" {
+  provider = kubernetes.cicd
   for_each = toset(values(var.namespaces))
   metadata {
     name = each.value
@@ -11,9 +50,10 @@ resource "kubernetes_namespace" "ns" {
 }
 
 resource "kubernetes_secret" "github" {
-  depends_on = [kubernetes_namespace.ns]
+  depends_on = [kubernetes_namespace.cicd]
+  provider   = kubernetes.cicd
   metadata {
-    name = "github-access-token"
+    name      = "github-access-token"
     namespace = var.namespaces.events
   }
   data = {
@@ -22,13 +62,14 @@ resource "kubernetes_secret" "github" {
 }
 
 resource "kubernetes_secret" "quay" {
-  depends_on = [kubernetes_namespace.ns]
+  depends_on = [kubernetes_namespace.cicd]
+  provider   = kubernetes.cicd
   metadata {
-    name = "bradfordwagner-kaniko-test-pull-secret"
+    name      = "bradfordwagner-kaniko-test-pull-secret"
     namespace = var.namespaces.workflows
   }
   data = {
     ".dockerconfigjson" = base64decode(var.quay_token)
   }
 }
-
+## END CICD Resources
