@@ -32,10 +32,9 @@ echo "https://${argo_host}" | pbcopy
 
 # setup secrets for cluster bootstrap
 kubectl create secret generic login    -n ${ns} --from-literal="username=admin" --from-literal="password=admin1234"
-kubectl create secret generic contexts -n ${ns} --from-file ~/.kube/kind/internal/cicd
+kubectl create secret generic contexts -n ${ns} --from-file ~/.kube/kind/internal/admin --from-file ~/.kube/kind/internal/cicd
 
-# bootstrap all of our apps
-kubectl apply -f argocd/bootstrap
+kubectl apply -f argocd/bootstrap/init_clusters.yaml
 
 unset KUBECONFIG # remove hard coded admin ctx
 pkill kubectl    # stop the port forward
