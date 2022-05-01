@@ -2,7 +2,6 @@
 # the end state might be local cluster only
 export KUBECONFIG=~/.kube/kind/admin
 ns=argocd
-kubectl create ns ${ns} &>/dev/null
 kubectl apply -n ${ns} -k https://github.com/bradfordwagner/deploy-argocd.git/ &>/dev/null
 
 echo awaiting argocd server + redis to startup
