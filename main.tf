@@ -42,13 +42,14 @@ resource "kubernetes_secret" "admin_auth_config" {
   depends_on = [kubernetes_namespace.admin]
   provider   = kubernetes.admin
   metadata {
-    name      = "auth-config"
+    name      = "k8s-auth-config"
     namespace = "vault"
   }
   data = {
     "cluster_name" = "admin"
     "ca"           = file("~/.kube/kind/internal/admin_ca")
     "server"       = file("~/.kube/kind/internal/admin_server")
+    "VAULT_TOKEN"  = file("~/.vault-token")
   }
 }
 
@@ -111,13 +112,14 @@ resource "kubernetes_secret" "cicd_auth_config" {
   depends_on = [kubernetes_namespace.admin]
   provider   = kubernetes.cicd
   metadata {
-    name      = "auth-config"
+    name      = "k8s-auth-config"
     namespace = "vault"
   }
   data = {
     "cluster_name" = "cicd"
     "ca"           = file("~/.kube/kind/internal/cicd_ca")
     "server"       = file("~/.kube/kind/internal/cicd_server")
+    "VAULT_TOKEN"  = file("~/.vault-token")
   }
 }
 ## END CICD Resources
