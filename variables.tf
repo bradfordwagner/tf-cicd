@@ -2,6 +2,7 @@ variable "namespaces" {
   default = {
     events    = "argo-events",
     workflows = "argo",
+    vault     = "vault",
   }
 }
 

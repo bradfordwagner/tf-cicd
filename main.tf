@@ -38,6 +38,20 @@ resource "kubernetes_secret" "keyvault" {
   }
 }
 
+resource "kubernetes_secret" "admin_auth_config" {
+  depends_on = [kubernetes_namespace.admin]
+  provider   = kubernetes.admin
+  metadata {
+    name      = "auth-config"
+    namespace = "vault"
+  }
+  data = {
+    "cluster_name" = "admin"
+    "ca"           = file("~/.kube/kind/internal/admin_ca")
+    "server"       = file("~/.kube/kind/internal/admin_server")
+  }
+}
+
 # based on: https://www.vaultproject.io/docs/platform/k8s/helm/run#protecting-sensitive-vault-configurations
 resource "kubernetes_secret" "storage" {
   depends_on = [kubernetes_namespace.admin]
@@ -90,6 +104,20 @@ resource "kubernetes_secret" "quay" {
   }
   data = {
     ".dockerconfigjson" = base64decode(var.quay_token)
+  }
+}
+
+resource "kubernetes_secret" "cicd_auth_config" {
+  depends_on = [kubernetes_namespace.admin]
+  provider   = kubernetes.cicd
+  metadata {
+    name      = "auth-config"
+    namespace = "vault"
+  }
+  data = {
+    "cluster_name" = "cicd"
+    "ca"           = file("~/.kube/kind/internal/cicd_ca")
+    "server"       = file("~/.kube/kind/internal/cicd_server")
   }
 }
 ## END CICD Resources
