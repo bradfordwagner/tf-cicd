@@ -1,24 +1,36 @@
 # used to initialize cluster contexts - from secret
+---
 apiVersion: argoproj.io/v1alpha1
-kind: Application
+kind: ApplicationSet
 metadata:
   name: vault
   namespace: argocd
   annotations:
     argocd.argoproj.io/sync-wave: "1"
-  finalizers:
-    - resources-finalizer.argocd.argoproj.io
 spec:
-  source:
-    repoURL: https://github.com/bradfordwagner/deploy-chart-vault.git
-    targetRevision: HEAD
-    path: .
-    helm:
-      releaseName: vault
-  destination:
-    name: in-cluster
-    namespace: vault
-  project: default
-  syncPolicy:
-    automated:
-      prune: true
+  generators:
+  - list:
+      elements:
+      - cluster: admin
+#     - cluster: cicd
+  template:
+    metadata:
+      name: '{{cluster}}-vault'
+      annotations:
+        argocd.argoproj.io/sync-wave: "1"
+      finalizers:
+        - resources-finalizer.argocd.argoproj.io
+    spec:
+      project: default
+      syncPolicy:
+        automated:
+          prune: true
+      source:
+        repoURL: https://github.com/bradfordwagner/deploy-chart-vault.git
+        targetRevision: HEAD
+        path: .
+        helm:
+          releaseName: vault
+      destination:
+        name: '{{cluster}}'
+        namespace: vault
