@@ -3,23 +3,21 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: vault
+  name: vault-k8s-auth
   namespace: argocd
   annotations:
-    argocd.argoproj.io/sync-wave: "1"
+    argocd.argoproj.io/sync-wave: "2"
 spec:
   generators:
   - list:
       elements:
       - cluster: admin
-        externalVaultAddr: "" # sets injection to local cluster
       - cluster: cicd
-        externalVaultAddr: "http://bradfordwagner.com:8200"
   template:
     metadata:
-      name: '{{cluster}}-vault'
+      name: '{{cluster}}-vault-k8s-auth'
       annotations:
-        argocd.argoproj.io/sync-wave: "1"
+        argocd.argoproj.io/sync-wave: "2"
       finalizers:
         - resources-finalizer.argocd.argoproj.io
     spec:
@@ -28,15 +26,11 @@ spec:
         automated:
           prune: true
       source:
-        repoURL: https://github.com/bradfordwagner/deploy-chart-vault.git
-        targetRevision: HEAD
+        repoURL: https://github.com/bradfordwagner/chart-vault-k8s-auth.git
+        targetRevision: feature/initialize
+#       targetRevision: HEAD
         path: .
         helm:
-          parameters:
-            - name: vault.injector.externalVaultAddr
-              value: '{{externalVaultAddr}}'
-            - name: vault.injector.authPath
-              value: 'auth/kubernetes/{{cluster}}'
           releaseName: vault
       destination:
         name: '{{cluster}}'
