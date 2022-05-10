@@ -49,7 +49,8 @@ resource "kubernetes_secret" "admin_auth_config" {
     "cluster_name" = "admin"
     "ca"           = file("~/.kube/kind/internal/admin_ca")
     "server"       = file("~/.kube/kind/internal/admin_server")
-    "VAULT_TOKEN"  = file("~/.vault-token")
+    "role_id"      = var.role_id
+    "secret_id"    = var.secret_id
   }
 }
 
@@ -119,7 +120,8 @@ resource "kubernetes_secret" "cicd_auth_config" {
     "cluster_name" = "cicd"
     "ca"           = file("~/.kube/kind/internal/cicd_ca")
     "server"       = file("~/.kube/kind/internal/cicd_server")
-    "VAULT_TOKEN"  = file("~/.vault-token")
+    "role_id"      = var.role_id
+    "secret_id"    = var.secret_id
   }
 }
 ## END CICD Resources

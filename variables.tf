@@ -21,3 +21,12 @@ variable "github_access_token" {
 variable "quay_token" {
   type = string
 }
+
+variable "role_id" {
+  type = string
+}
+
+variable "secret_id" {
+  type = string
+}
+
