@@ -1,0 +1,37 @@
+# used to initialize cluster contexts - from secret
+---
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: secrets-store-csi-driver
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
+spec:
+  generators:
+  - list:
+      elements:
+      - cluster: admin
+      - cluster: cicd
+  template:
+    metadata:
+      name: '{{cluster}}-secrets-store-csi-driver'
+      annotations:
+        argocd.argoproj.io/sync-wave: "2"
+      finalizers:
+        - resources-finalizer.argocd.argoproj.io
+    spec:
+      project: default
+      syncPolicy:
+        automated:
+          prune: true
+      source:
+        repoURL: https://github.com/bradfordwagner/deploy-secrets-store-csi-driver.git
+        targetRevision: HEAD
+        path: .
+        helm:
+          releaseName: secrets-store-csi-driver
+      destination:
+        name: '{{cluster}}'
+        namespace: kube-system
+
