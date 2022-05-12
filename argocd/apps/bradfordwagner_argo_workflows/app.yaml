@@ -10,7 +10,8 @@ metadata:
 spec:
   source:
     repoURL: https://github.com/bradfordwagner/chart-argo-workflows.git
-    targetRevision: feature/ansible-role
+    targetRevision: feature/vault
+#   targetRevision: feature/ansible-role
 #   targetRevision: HEAD
     path: .
     helm:
