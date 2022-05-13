@@ -20,9 +20,13 @@ nodes:
   - containerPort: ${argocd}
     hostPort: ${argocd}
     protocol: TCP
+  image: kindest/node:v1.23.6
 - role: worker
+  image: kindest/node:v1.23.6
 - role: worker
+  image: kindest/node:v1.23.6
 - role: worker
+  image: kindest/node:v1.23.6
 EOF
 }
 
@@ -45,9 +49,13 @@ nodes:
   - containerPort: ${argo_workflows}
     hostPort: ${argo_workflows}
     protocol: TCP
+  image: kindest/node:v1.23.6
 - role: worker
+  image: kindest/node:v1.23.6
 - role: worker
+  image: kindest/node:v1.23.6
 - role: worker
+  image: kindest/node:v1.23.6
 EOF
 }
 
