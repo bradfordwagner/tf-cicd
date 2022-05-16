@@ -97,18 +97,6 @@ resource "kubernetes_secret" "github" {
   }
 }
 
-resource "kubernetes_secret" "quay" {
-  depends_on = [kubernetes_namespace.cicd]
-  provider   = kubernetes.cicd
-  metadata {
-    name      = "bradfordwagner-kaniko-test-pull-secret"
-    namespace = var.namespaces.workflows
-  }
-  data = {
-    ".dockerconfigjson" = base64decode(var.quay_token)
-  }
-}
-
 resource "kubernetes_secret" "cicd_auth_config" {
   depends_on = [kubernetes_namespace.admin]
   provider   = kubernetes.cicd

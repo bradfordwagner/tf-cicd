@@ -18,10 +18,6 @@ variable "github_access_token" {
   type = string
 }
 
-variable "quay_token" {
-  type = string
-}
-
 variable "role_id" {
   type = string
 }
