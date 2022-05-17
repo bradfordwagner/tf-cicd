@@ -10,8 +10,7 @@ metadata:
 spec:
   source:
     repoURL: https://github.com/bradfordwagner/argo-events-webhook.git
-    targetRevision: feature/vault-integration
-#   targetRevision: HEAD
+    targetRevision: HEAD
     path: .
     helm:
       releaseName: events-webhook
