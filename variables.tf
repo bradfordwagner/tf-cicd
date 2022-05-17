@@ -14,10 +14,6 @@ variable "vault_sp_secret" {
   type = string
 }
 
-variable "github_access_token" {
-  type = string
-}
-
 variable "role_id" {
   type = string
 }
