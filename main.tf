@@ -85,18 +85,6 @@ resource "kubernetes_namespace" "cicd" {
   }
 }
 
-resource "kubernetes_secret" "github" {
-  depends_on = [kubernetes_namespace.cicd]
-  provider   = kubernetes.cicd
-  metadata {
-    name      = "github-access-token"
-    namespace = var.namespaces.events
-  }
-  data = {
-    token = var.github_access_token
-  }
-}
-
 resource "kubernetes_secret" "cicd_auth_config" {
   depends_on = [kubernetes_namespace.admin]
   provider   = kubernetes.cicd
