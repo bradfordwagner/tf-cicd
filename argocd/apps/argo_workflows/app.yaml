@@ -10,8 +10,7 @@ metadata:
 spec:
   source:
     repoURL: https://github.com/bradfordwagner/deploy-argoworkflow.git
-    targetRevision: feature/pin-version
-#   targetRevision: HEAD
+    targetRevision: HEAD
     path: .
   destination:
     name: cicd
