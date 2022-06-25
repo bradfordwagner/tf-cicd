@@ -10,7 +10,8 @@ metadata:
 spec:
   source:
     repoURL: https://github.com/bradfordwagner/chart-argo-workflows.git
-    targetRevision: feature/terraform
+    targetRevision: feature/go-releaser
+#   targetRevision: feature/terraform
 #   targetRevision: HEAD
     path: .
     helm:
