@@ -23,7 +23,4 @@ clear; tf apply   -auto-approve
 # user/pass = admin:admin1234
 ./startup.sh
 
-# take the webhook ip address and put it into clipboard
-k get svc --kubeconfig ~/.kube/personal -n argo-events github-webhook -o json | jq -r '.status.loadBalancer.ingress[0].ip' | pbcopy
-
 ```
