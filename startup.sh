@@ -33,6 +33,7 @@ echo "https://${argo_host}" | pbcopy
 kubectl create secret generic login    -n ${ns} --from-literal="username=admin" --from-literal="password=admin1234"
 kubectl create secret generic contexts -n ${ns} --from-file ~/.kube/kind/internal/admin --from-file ~/.kube/kind/internal/cicd
 
+sleep 5
 kubectl apply -f argocd/bootstrap/init_clusters.yaml
 
 unset KUBECONFIG # remove hard coded admin ctx
