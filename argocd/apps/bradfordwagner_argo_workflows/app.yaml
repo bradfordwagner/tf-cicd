@@ -10,7 +10,8 @@ metadata:
 spec:
   source:
     repoURL: https://github.com/bradfordwagner/chart-argo-workflows.git
-    targetRevision: 1.5.2
+    targetRevision: feature/go-lib
+#   targetRevision: 1.5.2
     path: .
     helm:
       releaseName: workflows
