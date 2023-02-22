@@ -27,7 +27,7 @@ spec:
           prune: true
       source:
         repoURL: https://github.com/bradfordwagner/chart-vault-k8s-auth.git
-        targetRevision: HEAD
+        targetRevision: 1.1.0
         path: .
         helm:
           releaseName: vault
