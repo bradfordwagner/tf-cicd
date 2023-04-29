@@ -20,7 +20,7 @@ nodes:
   - containerPort: ${argocd}
     hostPort: ${argocd}
     protocol: TCP
-  image: kindest/node:v1.24.7
+  image: kindest/node:v1.25.8
 EOF
 }
 
@@ -43,7 +43,7 @@ nodes:
   - containerPort: ${argo_workflows}
     hostPort: ${argo_workflows}
     protocol: TCP
-  image: kindest/node:v1.24.7
+  image: kindest/node:v1.25.8
 EOF
 }
 
