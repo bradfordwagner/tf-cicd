@@ -10,7 +10,7 @@ metadata:
 spec:
   source:
     repoURL: https://github.com/bradfordwagner/chart-argo-workflows.git
-    targetRevision: 1.8.0
+    targetRevision: 1.9.0
     path: .
     helm:
       releaseName: workflows
