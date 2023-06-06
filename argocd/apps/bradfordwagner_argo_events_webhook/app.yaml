@@ -10,7 +10,7 @@ metadata:
 spec:
   source:
     repoURL: https://github.com/bradfordwagner/argo-events-webhook.git
-    targetRevision: 1.24.0
+    targetRevision: 1.25.0
     path: .
     helm:
       releaseName: events-webhook
