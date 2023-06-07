@@ -8,12 +8,13 @@ metadata:
 spec:
   source:
     repoURL: https://github.com/bradfordwagner/chart-namespaces.git
-    targetRevision: 1.1.0
+    targetRevision: 2.0.1
     path: .
     helm:
       releaseName: namespaces
-      valueFiles:
-        - values/admin.values.yaml
+      parameters:
+        - name: namespaces
+          value: argocd|vault
   destination:
     name: in-cluster
   project: default
@@ -31,12 +32,13 @@ metadata:
 spec:
   source:
     repoURL: https://github.com/bradfordwagner/chart-namespaces.git
-    targetRevision: 1.1.0
+    targetRevision: 2.0.1
     path: .
     helm:
       releaseName: namespaces
-      valueFiles:
-        - values/cicd.values.yaml
+      parameters:
+        - name: namespaces
+          value: argo|argo-events
   destination:
     name: cicd
   project: default
