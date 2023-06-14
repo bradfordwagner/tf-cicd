@@ -24,10 +24,7 @@ argocd account update-password \
   --current-password ${initial_password} \
   --new-password admin1234
 
-# copy startup address to buffer
-argo_port=30001
-argo_host=localhost:${argo_port}
-echo "https://${argo_host}" | pbcopy
+./acr.sh
 
 # setup secrets for cluster bootstrap
 kubectl create secret generic login    -n ${ns} --from-literal="username=admin" --from-literal="password=admin1234"
