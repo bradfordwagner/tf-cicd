@@ -1,0 +1,26 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: namespaces-admin-test
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "0"
+spec:
+  source:
+    repoURL: bradfordwagner0.azurecr.io/helm
+    # repoURL: oci://bradfordwagner0.azurecr.io/helm
+    chart: bradfordwagner-namespaces
+    # repoURL: https://github.com/bradfordwagner/chart-namespaces.git
+    targetRevision: 2.0.1
+    path: .
+    helm:
+      releaseName: namespaces
+      parameters:
+        - name: namespaces
+          value: test|test1
+  destination:
+    name: in-cluster
+  project: default
+  syncPolicy:
+    automated:
+      prune: true
