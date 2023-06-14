@@ -1,47 +1,36 @@
 apiVersion: argoproj.io/v1alpha1
-kind: Application
+kind: ApplicationSet
 metadata:
-  name: namespaces-admin
+  name: cluster-namespaces
   namespace: argocd
-  annotations:
-    argocd.argoproj.io/sync-wave: "0"
 spec:
-  source:
-    repoURL: https://github.com/bradfordwagner/chart-namespaces.git
-    targetRevision: 2.0.1
-    path: .
-    helm:
-      releaseName: namespaces
-      parameters:
-        - name: namespaces
-          value: argocd|vault
-  destination:
-    name: in-cluster
-  project: default
-  syncPolicy:
-    automated:
-      prune: true
----
-apiVersion: argoproj.io/v1alpha1
-kind: Application
-metadata:
-  name: namespaces-cicd
-  namespace: argocd
-  annotations:
-    argocd.argoproj.io/sync-wave: "0"
-spec:
-  source:
-    repoURL: https://github.com/bradfordwagner/chart-namespaces.git
-    targetRevision: 2.0.1
-    path: .
-    helm:
-      releaseName: namespaces
-      parameters:
-        - name: namespaces
-          value: argo|argo-events
-  destination:
-    name: cicd
-  project: default
-  syncPolicy:
-    automated:
-      prune: true
+  generators:
+    - list:
+        elements:
+          - cluster: admin
+            namespaces: argocd|vault
+          - cluster: cicd
+            namespaces: argo|argo-events
+  template:
+    metadata:
+      name: namespaces-{{ cluster }}
+      annotations:
+        argocd.argoproj.io/sync-wave: "0"
+    spec:
+      source:
+        #repoURL: https://github.com/bradfordwagner/chart-namespaces.git
+        repoURL: bradfordwagner0.azurecr.io/helm
+        chart: bradfordwagner-namespaces
+        targetRevision: 2.0.2
+        path: .
+        helm:
+          releaseName: namespaces
+          parameters:
+            - name: namespaces
+              value: '{{ namespaces }}'
+      destination:
+        name: '{{ cluster }}'
+      project: default
+      syncPolicy:
+        automated:
+          prune: true
