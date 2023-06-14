@@ -7,10 +7,9 @@ metadata:
     argocd.argoproj.io/sync-wave: "0"
 spec:
   source:
-    repoURL: bradfordwagner0.azurecr.io/helm
-    # repoURL: oci://bradfordwagner0.azurecr.io/helm
-    chart: bradfordwagner-namespaces
     # repoURL: https://github.com/bradfordwagner/chart-namespaces.git
+    repoURL: bradfordwagner0.azurecr.io/helm
+    chart: bradfordwagner-namespaces
     targetRevision: 2.0.1
     path: .
     helm:
