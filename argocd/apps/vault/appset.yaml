@@ -28,8 +28,10 @@ spec:
         automated:
           prune: true
       source:
-        repoURL: https://github.com/bradfordwagner/deploy-chart-vault.git
-        targetRevision: HEAD
+        # repoURL: https://github.com/bradfordwagner/deploy-chart-vault.git
+        repoURL: bradfordwagner0.azurecr.io/helm
+        chart: bradfordwagner-deploy-vault
+        targetRevision: 1.1.0
         path: .
         helm:
           parameters:
