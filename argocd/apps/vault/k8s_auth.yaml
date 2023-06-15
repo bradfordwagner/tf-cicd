@@ -26,8 +26,10 @@ spec:
         automated:
           prune: true
       source:
-        repoURL: https://github.com/bradfordwagner/chart-vault-k8s-auth.git
-        targetRevision: 1.1.0
+        # repoURL: https://github.com/bradfordwagner/chart-vault-k8s-auth.git
+        repoURL: bradfordwagner0.azurecr.io/helm
+        chart: bradfordwagner-vault-k8s-auth
+        targetRevision: 1.2.0
         path: .
         helm:
           releaseName: vault
