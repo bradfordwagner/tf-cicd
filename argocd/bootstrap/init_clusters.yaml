@@ -10,8 +10,10 @@ metadata:
     - resources-finalizer.argocd.argoproj.io
 spec:
   source:
-    repoURL: https://github.com/bradfordwagner/chart-argocd-init-contexts.git
-    targetRevision: 1.2.0
+    # repoURL: https://github.com/bradfordwagner/chart-argocd-init-contexts.git
+    repoURL: bradfordwagner0.azurecr.io/helm
+    chart: argocd-init-contexts
+    targetRevision: 1.3.0
     path: .
     helm:
       releaseName: bootstrap-clusters
