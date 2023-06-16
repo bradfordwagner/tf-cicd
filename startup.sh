@@ -24,6 +24,7 @@ argocd account update-password \
   --current-password ${initial_password} \
   --new-password admin1234
 
+# install acr credentials into argocd
 ./acr.sh
 
 # setup secrets for cluster bootstrap
