@@ -12,7 +12,7 @@ spec:
     # repoURL: https://github.com/bradfordwagner/argo-events-webhook.git
     repoURL: bradfordwagner0.azurecr.io/helm
     chart: bradfordwagner-argo-events-webhook
-    targetRevision: 1.31.0
+    targetRevision: 1.32.0
     path: .
     helm:
       releaseName: events-webhook
