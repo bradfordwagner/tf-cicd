@@ -26,8 +26,10 @@ spec:
         automated:
           prune: true
       source:
-        repoURL: https://github.com/bradfordwagner/deploy-secrets-store-csi-driver.git
-        targetRevision: HEAD
+        # repoURL: https://github.com/bradfordwagner/deploy-secrets-store-csi-driver.git
+        repoURL: bradfordwagner0.azurecr.io/helm
+        chart: bradfordwagner-deploy-secrets-store-csi-driver
+        targetRevision: 1.0.0
         path: .
         helm:
           releaseName: secrets-store-csi-driver
