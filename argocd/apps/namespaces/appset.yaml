@@ -8,9 +8,13 @@ spec:
     - list:
         elements:
           - cluster: admin
-            namespaces: argocd|vault
+            namespaces: >
+              argocd
+              vault
           - cluster: cicd
-            namespaces: argo|argo-events
+            namespaces: >
+              argo
+              argo-events
   template:
     metadata:
       name: namespaces-{{ cluster }}
@@ -21,7 +25,7 @@ spec:
         #repoURL: https://github.com/bradfordwagner/chart-namespaces.git
         repoURL: bradfordwagner0.azurecr.io/helm
         chart: bradfordwagner-namespaces
-        targetRevision: 2.0.2
+        targetRevision: 2.1.0
         path: .
         helm:
           releaseName: namespaces
