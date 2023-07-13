@@ -9,9 +9,7 @@ metadata:
     - resources-finalizer.argocd.argoproj.io
 spec:
   source:
-    # repoURL: https://github.com/bradfordwagner/chart-argo-workflows.git
-    repoURL: bradfordwagner0.azurecr.io/helm
-    chart: bradfordwagner-argo-workflows
+    repoURL: https://github.com/bradfordwagner/chart-argo-workflows.git
     targetRevision: 1.14.1
     path: .
     helm:
