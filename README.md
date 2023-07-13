@@ -9,14 +9,6 @@
 # bootstrap all of our apps
 kubectl apply -f argocd/bootstrap
 
-# get the context for new cluster
-az aks get-credentials --resource-group bradfordwagner-infra --name infra --admin --overwrite-existing -f ~/.kube/cicd
-az aks list | jq '.[] | "\(.name) \(.resourceGroup)"' -r | xargs -n2 zsh -c 'az aks get-credentials --resource-group $2 --name $1 --admin -f ~/.kube/cicd --overwrite-existing' zsh
-
-# create namespaces and secrets required for events+workflows
-clear; tf init
-clear; tf apply   -auto-approve
-
 # set your kube config to minikube
 # pbpaste will place the address into your clipboard
 # enter it into your browser to see argocd
