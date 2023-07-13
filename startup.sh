@@ -24,9 +24,6 @@ argocd account update-password \
   --current-password ${initial_password} \
   --new-password admin1234
 
-# install acr credentials into argocd
-./acr.sh
-
 # setup secrets for cluster bootstrap
 kubectl create secret generic login    -n ${ns} --from-literal="username=admin" --from-literal="password=admin1234"
 kubectl create secret generic contexts -n ${ns} --from-file ~/.kube/kind/internal/admin --from-file ~/.kube/kind/internal/cicd
