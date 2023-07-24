@@ -6,6 +6,9 @@
 # for the overly lazy
 ./kind.sh create; tf init; tf apply -auto-approve; ./startup.sh
 
+# delete the clusters
+./kind.sh delete
+
 # bootstrap all of our apps
 kubectl apply -f argocd/bootstrap
 
