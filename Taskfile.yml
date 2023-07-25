@@ -6,18 +6,33 @@ dotenv:
   # for now this is a copy of azure.bradfordwagner-infra.sh
   - '.secrets'
 
+env:
+  KUBECONFIG: '{{ .HOME }}/.kube/kind/admin'
+
 tasks:
   clear:
     cmds: [clear]
     internal: true
-  create:
+  cluster_create:
+    aliases: [cc]
     cmds:
       - task: clear
       - ./kind.sh create
       - terraform init
       - terraform apply -auto-approve
       - ./startup.sh
-  delete:
+  cluster_delete:
+    aliases: [cd]
     cmds:
       - task: clear
       - ./kind.sh delete
+  kubernetes_apply:
+    aliases: [ka]
+    cmds:
+      - task: clear
+      - kubectl apply -f ./argocd/bootstrap
+  kubernetes_delete:
+    aliases: [kd]
+    cmds:
+      - task: clear
+      - kubectl delete -f ./argocd/bootstrap
