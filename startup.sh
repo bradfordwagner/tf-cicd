@@ -1,3 +1,4 @@
+#!/usr/bin/env zsh
 # use a local cluster like minikube to bootstrap a target cluster
 # the end state might be local cluster only
 export KUBECONFIG=~/.kube/kind/admin

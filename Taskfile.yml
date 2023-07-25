@@ -1,0 +1,23 @@
+# https://taskfile.dev
+
+version: '3'
+
+dotenv:
+  # for now this is a copy of azure.bradfordwagner-infra.sh
+  - '.secrets'
+
+tasks:
+  clear:
+    cmds: [clear]
+    internal: true
+  create:
+    cmds:
+      - task: clear
+      - ./kind.sh create
+      - terraform init
+      - terraform apply -auto-approve
+      - ./startup.sh
+  delete:
+    cmds:
+      - task: clear
+      - ./kind.sh delete

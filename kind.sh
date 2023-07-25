@@ -1,3 +1,4 @@
+#!/usr/bin/env zsh
 # inputs: create|delete
 # used to create/destroy kind clusters
 # puts kube contexts into ~/.kube/kind/ or ~/.kube/kind/internal
