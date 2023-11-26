@@ -9,12 +9,14 @@ spec:
         elements:
           - cluster: admin
             namespaces: >
+              argo-workflows
               argocd
               vault
           - cluster: cicd
             namespaces: >
               argo
               argo-events
+              argo-workflows
   template:
     metadata:
       name: namespaces-{{ cluster }}
