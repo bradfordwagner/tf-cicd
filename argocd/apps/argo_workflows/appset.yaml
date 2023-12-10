@@ -27,4 +27,3 @@ spec:
       syncPolicy:
         automated:
           prune: true
-

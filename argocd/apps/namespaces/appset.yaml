@@ -17,6 +17,7 @@ spec:
               argo
               argo-events
               argo-workflows
+              workflows
   template:
     metadata:
       name: namespaces-{{ cluster }}
