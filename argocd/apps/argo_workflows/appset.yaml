@@ -1,29 +1,29 @@
-apiVersion: argoproj.io/v1alpha1
-kind: ApplicationSet
-metadata:
-  name: argo-workflows
-  namespace: argocd
-spec:
-  goTemplate: true
-  goTemplateOptions: ["missingkey=error"]
-  generators:
-    - clusters: {}
-  template:
-    metadata:
-      name: argo-workflows-{{ .name }}
-      annotations:
-        argocd.argoproj.io/sync-wave: "0"
-    spec:
-      source:
-        repoURL: https://github.com/argoproj/argo-helm.git
-        targetRevision: argo-workflows-0.39.3
-        path: ./charts/argo-workflows
-        helm:
-          releaseName: argo-workflows
-      destination:
-        name: '{{ .name }}'
-        namespace: argo-workflows
-      project: default
-      syncPolicy:
-        automated:
-          prune: true
+# apiVersion: argoproj.io/v1alpha1
+# kind: ApplicationSet
+# metadata:
+#   name: argo-workflows
+#   namespace: argocd
+# spec:
+#   goTemplate: true
+#   goTemplateOptions: ["missingkey=error"]
+#   generators:
+#     - clusters: {}
+#   template:
+#     metadata:
+#       name: argo-workflows-{{ .name }}
+#       annotations:
+#         argocd.argoproj.io/sync-wave: "0"
+#     spec:
+#       source:
+#         repoURL: https://github.com/argoproj/argo-helm.git
+#         targetRevision: argo-workflows-0.39.3
+#         path: ./charts/argo-workflows
+#         helm:
+#           releaseName: argo-workflows
+#       destination:
+#         name: '{{ .name }}'
+#         namespace: argo-workflows
+#       project: default
+#       syncPolicy:
+#         automated:
+#           prune: true
