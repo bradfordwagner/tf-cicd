@@ -17,6 +17,7 @@ spec:
               argo
               argo-events
               argo-workflows
+              docker-driver
               workflows
   template:
     metadata:
