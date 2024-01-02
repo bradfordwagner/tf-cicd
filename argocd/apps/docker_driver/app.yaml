@@ -10,7 +10,7 @@ metadata:
 spec:
   source:
     repoURL: https://github.com/bradfordwagner/chart-docker-kubernetes-driver
-    targetRevision: 1.0.1
+    targetRevision: 1.1.0
     path: .
     helm:
       releaseName: docker-driver
