@@ -7,7 +7,7 @@ dotenv:
   - '.secrets'
 
 env:
-  KUBECONFIG: '{{ .HOME }}/.kube/kind/admin'
+  KUBECONFIG: '{{ .HOME }}/.kube/admin'
 
 tasks:
   clear:

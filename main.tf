@@ -1,10 +1,10 @@
 # setup k8s providers
 provider "kubernetes" {
-  config_path = "~/.kube/kind/cicd"
+  config_path = "~/.kube/cicd"
   alias       = "cicd"
 }
 provider "kubernetes" {
-  config_path = "~/.kube/kind/admin"
+  config_path = "~/.kube/admin"
   alias       = "admin"
 }
 

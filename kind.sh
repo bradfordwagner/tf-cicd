@@ -1,17 +1,19 @@
 #!/usr/bin/env zsh
 # inputs: create|delete
 # used to create/destroy kind clusters
-# puts kube contexts into ~/.kube/kind/ or ~/.kube/kind/internal
+# puts kube contexts into ~/.kube/ or ~/.kube/kind/internal
 # internal signifies in cluster access
 
 function create_admin_cluster() {
   cluster_name=$1
   argocd=30001
   vault=30003
-  kind create cluster --kubeconfig ~/.kube/kind/${cluster_name} --config /dev/stdin <<EOF
+  kind create cluster --kubeconfig ~/.kube/${cluster_name} --config /dev/stdin <<EOF
 kind: Cluster
 apiVersion: kind.x-k8s.io/v1alpha4
 name: ${cluster_name}
+networking:
+  apiServerPort: 30100
 nodes:
 - role: control-plane
   extraPortMappings:
@@ -29,10 +31,12 @@ function create_cicd_cluster() {
   cluster_name=$1
   github_webhook=30000
   argo_workflows=30002
-  kind create cluster --kubeconfig ~/.kube/kind/${cluster_name} --config /dev/stdin <<EOF
+  kind create cluster --kubeconfig ~/.kube/${cluster_name} --config /dev/stdin <<EOF
 kind: Cluster
 apiVersion: kind.x-k8s.io/v1alpha4
 name: ${cluster_name}
+networking:
+  apiServerPort: 30101
 nodes:
 - role: control-plane
   extraPortMappings:
@@ -65,7 +69,7 @@ function delete_cluster() {
   cluster_name=${1}
   kind delete clusters ${cluster_name}
   rm \
-    ~/.kube/kind/${cluster_name} \
+    ~/.kube/${cluster_name} \
     ~/.kube/kind/internal/${cluster_name}
 }
 
