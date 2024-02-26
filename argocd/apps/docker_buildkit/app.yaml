@@ -13,10 +13,10 @@ spec:
     targetRevision: 1.1.0
     path: .
     helm:
-      releaseName: docker-driver
+      releaseName: docker-buildkit
   destination:
     name: cicd
-    namespace: docker-driver
+    namespace: docker-buildkit
   project: default
   syncPolicy:
     automated:
