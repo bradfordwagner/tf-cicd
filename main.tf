@@ -74,6 +74,19 @@ EOF
   }
 }
 
+resource "kubernetes_secret" "tls" {
+  depends_on = [kubernetes_namespace.admin]
+  provider   = kubernetes.admin
+  metadata {
+    name      = "tls"
+    namespace = "vault"
+  }
+  data = {
+    "private_key" = file(".private_key")
+    "certificate" = file(".certificate")
+  }
+}
+
 ## End ADMIN resources
 
 ## CICD resources
