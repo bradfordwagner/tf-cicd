@@ -41,7 +41,7 @@ function create_cicd_cluster() {
   cluster_name=$1
   github_webhook=30000
   argo_workflows=30002
-  kind create cluster --kubeconfig ~/.kube/${cluster_name}  --config /dev/stdin <<EOF
+  kind create cluster --kubeconfig ~/.kube/${cluster_name} --config /dev/stdin <<EOF
 kind: Cluster
 apiVersion: kind.x-k8s.io/v1alpha4
 name: ${cluster_name}
