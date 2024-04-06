@@ -14,7 +14,7 @@ spec:
       - cluster: admin
         externalVaultAddr: "" # sets injection to local cluster
       - cluster: cicd
-        externalVaultAddr: "http://bradfordwagner.com:8200"
+        externalVaultAddr: https://bradfordwagner.com:8200
   template:
     metadata:
       name: '{{cluster}}-vault'
@@ -38,7 +38,7 @@ spec:
             - name: vault.injector.authPath
               value: 'auth/kubernetes/{{cluster}}'
             - name: vault.csi.extraArgs[0]
-              value: '-vault-addr=http://bradfordwagner.com:8200'
+              value: '-vault-addr=https://bradfordwagner.com:8200'
             - name: vault.csi.extraArgs[1]
               value: '-vault-tls-skip-verify=true'
             - name: vault.csi.extraArgs[2]
