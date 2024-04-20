@@ -27,7 +27,7 @@ spec:
           prune: true
       source:
         repoURL: https://github.com/bradfordwagner/deploy-secrets-store-csi-driver.git
-        targetRevision: 1.0.0
+        targetRevision: 1.1.0
         path: .
         helm:
           releaseName: secrets-store-csi-driver
