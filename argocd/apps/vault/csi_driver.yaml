@@ -12,7 +12,6 @@ spec:
   - list:
       elements:
       - cluster: admin
-      - cluster: cicd
   template:
     metadata:
       name: '{{cluster}}-secrets-store-csi-driver'

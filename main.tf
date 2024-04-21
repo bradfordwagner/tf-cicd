@@ -1,9 +1,5 @@
 # setup k8s providers
 provider "kubernetes" {
-  config_path = "~/.kube/cicd"
-  alias       = "cicd"
-}
-provider "kubernetes" {
   config_path = "~/.kube/admin"
   alias       = "admin"
 }
@@ -88,29 +84,3 @@ resource "kubernetes_secret" "tls" {
 }
 
 ## End ADMIN resources
-
-## CICD resources
-resource "kubernetes_namespace" "cicd" {
-  provider = kubernetes.cicd
-  for_each = toset(values(var.namespaces))
-  metadata {
-    name = each.value
-  }
-}
-
-resource "kubernetes_secret" "cicd_auth_config" {
-  depends_on = [kubernetes_namespace.admin]
-  provider   = kubernetes.cicd
-  metadata {
-    name      = "k8s-auth-config"
-    namespace = "vault"
-  }
-  data = {
-    "cluster_name" = "cicd"
-    "ca"           = file("~/.kube/kind/internal/cicd_ca")
-    "server"       = file("~/.kube/kind/internal/cicd_server")
-    "role_id"      = var.role_id
-    "secret_id"    = var.secret_id
-  }
-}
-## END CICD Resources

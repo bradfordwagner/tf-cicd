@@ -11,14 +11,8 @@ spec:
             namespaces: >
               argo-workflows
               argocd
-              vault
-          - cluster: cicd
-            namespaces: >
-              argo
-              argo-events
-              argo-workflows
               docker-buildkit
-              workflows
+              vault
   template:
     metadata:
       name: namespaces-{{ cluster }}

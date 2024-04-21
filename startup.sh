@@ -27,7 +27,8 @@ argocd account update-password \
 
 # setup secrets for cluster bootstrap
 kubectl create secret generic login    -n ${ns} --from-literal="username=admin" --from-literal="password=admin1234"
-kubectl create secret generic contexts -n ${ns} --from-file ~/.kube/kind/internal/admin --from-file ~/.kube/kind/internal/cicd
+kubectl create secret generic contexts -n ${ns} \
+  --from-file ~/.kube/kind/internal/admin
 
 sleep 5
 kubectl apply -f argocd/bootstrap/init_clusters.yaml

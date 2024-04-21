@@ -37,41 +37,6 @@ nodes:
 EOF
 }
 
-function create_cicd_cluster() {
-  cluster_name=$1
-  github_webhook=30000
-  argo_workflows=30002
-  kind create cluster --kubeconfig ~/.kube/${cluster_name} --config /dev/stdin <<EOF
-kind: Cluster
-apiVersion: kind.x-k8s.io/v1alpha4
-name: ${cluster_name}
-networking:
-  apiServerPort: 30101
-  apiServerAddress: 0.0.0.0
-nodes:
-- role: control-plane
-  kubeadmConfigPatches:
-  - |
-    # to check this configuration: kubectl -n kube-system get configmap kubeadm-config -oyaml
-    kind: ClusterConfiguration
-    apiServer:
-      certSANs:
-        - 0.0.0.0
-        - bwagner-studio
-        - localhost
-  extraPortMappings:
-  # github webhook
-  - containerPort: ${github_webhook}
-    hostPort: ${github_webhook}
-    protocol: TCP
-  # argo workflows
-  - containerPort: ${argo_workflows}
-    hostPort: ${argo_workflows}
-    protocol: TCP
-  image: kindest/node:v1.28.0
-EOF
-}
-
 function create_cluster() {
   cluster_name=${1}
   create_${cluster_name}_cluster ${cluster_name}
@@ -101,5 +66,3 @@ function create_dirs() {
 action=${1}
 create_dirs
 ${action}_cluster admin
-${action}_cluster cicd
-

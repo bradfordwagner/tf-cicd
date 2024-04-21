@@ -1,25 +1,5 @@
 # tf-cicd
 
-## ArgoCD
-```bash
-
-# for the overly lazy
-./kind.sh create; tf init; tf apply -auto-approve; ./startup.sh
-
-# delete the clusters
-./kind.sh delete
-
-# bootstrap all of our apps
-kubectl apply -f argocd/bootstrap
-
-# set your kube config to minikube
-# pbpaste will place the address into your clipboard
-# enter it into your browser to see argocd
-# user/pass = admin:admin1234
-./startup.sh
-
-```
-
 ## Rotate Secrets
 ```bash
 # vault k8s auth approle

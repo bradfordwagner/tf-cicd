@@ -15,7 +15,7 @@ spec:
     helm:
       releaseName: docker-buildkit
   destination:
-    name: cicd
+    name: admin
     namespace: docker-buildkit
   project: default
   syncPolicy:
