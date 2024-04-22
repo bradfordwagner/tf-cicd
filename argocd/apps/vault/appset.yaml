@@ -43,3 +43,8 @@ spec:
       destination:
         name: '{{cluster}}'
         namespace: vault
+      ignoreDifferences:
+      - group: admissionregistration.k8s.io
+        kind: MutatingWebhookConfiguration
+        jsonPointers:
+        - /webhooks/0/clientConfig/caBundle
