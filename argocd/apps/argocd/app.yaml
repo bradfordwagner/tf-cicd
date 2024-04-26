@@ -6,7 +6,7 @@ metadata:
 spec:
   source:
     repoURL: https://github.com/bradfordwagner/deploy-argocd.git
-    targetRevision: HEAD
+    targetRevision: 0.1.1
     path: .
   destination:
     name: in-cluster

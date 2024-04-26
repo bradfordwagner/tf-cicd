@@ -10,10 +10,10 @@ spec:
     - clusters:
         selector:
           matchExpressions:
-            - key: name
+            - key: cluster.name
               operator: NotIn
               values:
-                - in-cluster
+                - admin
   template:
     metadata:
       name: argo-workflows-{{ .name }}
