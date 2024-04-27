@@ -4,10 +4,13 @@ version: '3'
 
 dotenv:
   # for now this is a copy of azure.bradfordwagner-infra.sh
-  - '.secrets'
+  - .secrets.sh
 
 env:
   KUBECONFIG: '{{ .HOME }}/.kube/admin'
+  VAULT_ADDR: https://bradfordwagner.com:8200
+  VAULT_FORMAT: json
+  kv2_path: secret/tf.cicd
 
 tasks:
   clear:
@@ -36,3 +39,15 @@ tasks:
     cmds:
       - task: clear
       - kubectl delete -f ./argocd/bootstrap
+  vault_write_secrets:
+    aliases: [vws]
+    cmds:
+      - task: clear
+      - vault kv put {{ .kv2_path }} secrets="$(cat .secrets.sh)" certificate="$(cat .certificate)" private_key="$(cat .private_key)"
+  vault_read_secrets:
+    aliases: [vrs]
+    cmds:
+      - task: clear
+      - vault kv get -format=json {{ .kv2_path }} | jq -r '.data.data.secrets' > .secrets.sh
+      - vault kv get -format=json {{ .kv2_path }} | jq -r '.data.data.certificate' > .certificate
+      - vault kv get -format=json {{ .kv2_path }} | jq -r '.data.data.private_key' > .private_key
