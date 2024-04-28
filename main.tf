@@ -12,7 +12,11 @@ data "azuread_service_principal" "vault" {
 ## ADMIN resources
 resource "kubernetes_namespace" "admin" {
   provider = kubernetes.admin
-  for_each = toset(["vault", "argocd"])
+  for_each = toset([
+    "argocd",
+    "argo-workflows",
+    "vault",
+  ])
   metadata {
     name = each.value
   }

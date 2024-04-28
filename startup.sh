@@ -3,6 +3,7 @@
 # the end state might be local cluster only
 export KUBECONFIG=~/.kube/admin
 ns=argocd
+set -x
 kubectl apply -n ${ns} -k https://github.com/bradfordwagner/deploy-argocd.git/ &>/dev/null
 
 echo awaiting argocd server + redis to startup
@@ -31,6 +32,11 @@ kubectl create secret generic contexts -n ${ns} \
   --from-file ~/.kube/kind/internal/admin
 
 sleep 5
+# setup argo workflows
+kubectl apply -f argocd/apps/argo_workflows/appset.yaml
+kubectl wait -n ${ns} application/argo-workflows-in-cluster --for jsonpath={.status.health.status}=Healthy --timeout=5m
+
+# this will switch to a workflow
 kubectl apply -f argocd/bootstrap/init_clusters.yaml
 
 unset KUBECONFIG # remove hard coded admin ctx
