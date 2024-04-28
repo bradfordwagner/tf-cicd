@@ -70,7 +70,7 @@ EOF
   }
 }
 
-resource "kubernetes_secret" "tls" {
+resource "kubernetes_secret" "vault_tls" {
   depends_on = [kubernetes_namespace.admin]
   provider   = kubernetes.admin
   metadata {
