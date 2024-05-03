@@ -27,7 +27,7 @@ spec:
           prune: true
       source:
         repoURL: https://github.com/bradfordwagner/deploy-chart-vault.git
-        targetRevision: 1.6.0
+        targetRevision: 2.0.0
         path: .
         helm:
           parameters:
@@ -35,10 +35,6 @@ spec:
               value: '{{externalVaultAddr}}'
             - name: vault.injector.authPath
               value: 'auth/kubernetes/{{cluster}}'
-            - name: vault.csi.extraArgs[0]
-              value: '-vault-addr=https://bradfordwagner.com:8200'
-            - name: vault.csi.extraArgs[1]
-              value: '-vault-mount=kubernetes/{{cluster}}'
           releaseName: vault
       destination:
         name: '{{cluster}}'
