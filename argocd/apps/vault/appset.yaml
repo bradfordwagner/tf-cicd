@@ -31,6 +31,8 @@ spec:
         path: .
         helm:
           parameters:
+            - name: vault.injector.enabled
+              value: 'false'
             - name: vault.injector.externalVaultAddr
               value: '{{externalVaultAddr}}'
             - name: vault.injector.authPath
