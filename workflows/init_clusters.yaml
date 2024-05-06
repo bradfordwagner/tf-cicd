@@ -1,0 +1,58 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: hello-world-
+  namespace: argocd
+spec:
+  ttlStrategy:
+    secondsAfterSuccess: 5
+    secondsAfterFailure: 500
+  entrypoint: hello
+  arguments:
+    parameters: &params
+      - name: login_secret
+        value: login
+      - name: context_secret
+        value: contexts
+      - name: argocd_server
+        value: argocd-server:443
+  templates:
+    - name: hello
+      inputs:
+        parameters: *params
+      container:
+        image: quay.io/argoproj/argocd:v2.6.2
+        command: [/bin/sh, -lc]
+        args:
+          - |
+            # load username/password from secret
+            argocd login {{ inputs.parameters.argocd_server }} \
+              --insecure \
+              --username ${username} \
+              --password ${password}
+
+            # show current contexts
+            set -ex
+            argocd context
+
+            # bootstrap contexts which exist in the contexts secret
+            cd /contexts
+            echo bootstrapping clusters
+            ls | xargs -I % argocd cluster add \
+              --kubeconfig % kind-% \
+              --name % \
+              -y \
+              --upsert \
+              --label cluster.name='%'
+        envFrom:
+          - secretRef:
+              name: '{{ inputs.parameters.login_secret }}'
+        volumeMounts:
+        - name: contexts
+          mountPath: /contexts
+          readOnly: true
+  volumes:
+    - name: contexts
+      secret:
+        secretName: '{{ inputs.parameters.context_secret }}'
