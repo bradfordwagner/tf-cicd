@@ -1,14 +1,17 @@
 ---
+# todo: rename from hello world
+# maybe even use a workflow template repo
+# better yet based on taskfiles
 apiVersion: argoproj.io/v1alpha1
 kind: Workflow
 metadata:
-  generateName: hello-world-
+  generateName: bootstrap-argocd-contexts-
   namespace: argocd
 spec:
   ttlStrategy:
     secondsAfterSuccess: 5
     secondsAfterFailure: 500
-  entrypoint: hello
+  entrypoint: main
   arguments:
     parameters: &params
       - name: login_secret
@@ -18,7 +21,7 @@ spec:
       - name: argocd_server
         value: argocd-server:443
   templates:
-    - name: hello
+    - name: main
       inputs:
         parameters: *params
       container:
