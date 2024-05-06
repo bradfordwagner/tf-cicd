@@ -37,7 +37,7 @@ kubectl apply -f argocd/apps/argo_workflows/appset.yaml
 kubectl wait -n ${ns} application/argo-workflows-in-cluster --for jsonpath={.status.health.status}=Healthy --timeout=5m
 
 # this will switch to a workflow
-kubectl apply -f argocd/bootstrap/init_clusters.yaml
+argo submit ./workflows/init_clusters.yaml --watch
 
 unset KUBECONFIG # remove hard coded admin ctx
 pkill kubectl    # stop the port forward
