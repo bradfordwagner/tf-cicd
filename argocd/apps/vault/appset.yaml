@@ -27,7 +27,7 @@ spec:
           prune: true
       source:
         repoURL: https://github.com/bradfordwagner/deploy-chart-vault.git
-        targetRevision: 2.0.0
+        targetRevision: 2.1.0
         path: .
         helm:
           parameters:
